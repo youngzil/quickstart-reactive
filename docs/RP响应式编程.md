@@ -1,3 +1,4 @@
+
 1、Reactive Programming(RP),响应式编程
 2、响应式编程框架
 3、
@@ -8,6 +9,9 @@
 8、
 9、
 
+
+学习网站
+https://www.infoq.cn/article/rxjava-by-example/
 
 ---------------------------------------------------------------------------------------------------------------------
 Reactive Programming(RP),响应式编程
@@ -114,7 +118,15 @@ https://github.com/reactor/reactor-core
 
 
 
+响应式宣言
+https://www.reactivemanifesto.org/ribbons
+https://www.reactivemanifesto.org/
+https://www.reactivemanifesto.org/zh-CN
 
+
+参考
+https://www.infoq.cn/article/2016/01/reactive-basics
+https://blog.csdn.net/get_set/article/details/79506602
 
 
 
