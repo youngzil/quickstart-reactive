@@ -6,7 +6,11 @@ Akka 是一个用 Scala 编写的库，用于简化编写容错的、高可伸�
 
 https://akka.io/
 https://github.com/akka/akka
+https://doc.akka.io/docs/akka/current/typed/guide/introduction.html
 https://www.oschina.net/p/akka
+
+示例下载
+https://developer.lightbend.com/guides/akka-quickstart-java/
 
 
 
@@ -16,12 +20,13 @@ http://www.infoq.com/cn/articles/Building-Reactive-Applications-with-Akka
 https://www.lightbend.com/akka
 https://www.toptal.com/scala/concurrency-and-fault-tolerance-made-easy-an-intro-to-akka
 https://dzone.com/refcardz/reactive-programming-akka
+https://www.infoq.cn/article/Building-Reactive-Applications-with-Akka/
 
 
 
 介绍Actor模型
-http://www.infoq.com/cn/news/2014/11/intro-actor-model
-https://github.com/arunma/AkkaMessagingRequestResponse
+Actor模型.md
+
 
 
 
