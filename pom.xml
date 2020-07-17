@@ -44,6 +44,8 @@
   <modules>
     <module>quickstart-reactivex</module>
     <module>quickstart-reactor</module>
+    <module>quickstart-rxjava2</module>
+    <module>quickstart-rxjava3</module>
     <module>quickstart-reactive-streams</module>
     <module>quickstart-ratpack</module>
     <module>quickstart-rsocket</module>

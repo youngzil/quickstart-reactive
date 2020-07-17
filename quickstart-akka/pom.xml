@@ -78,6 +78,7 @@
 
   <build>
     <plugins>
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -91,10 +92,11 @@
           </arguments>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
-        <version>${kotlin.version}</version>
+        <version>1.3.50</version>
         <executions>
           <execution>
             <id>compile</id>
@@ -121,6 +123,7 @@
           <jvmTarget>1.8</jvmTarget>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -146,6 +149,7 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+
     </plugins>
   </build>
 
