@@ -1,6 +1,6 @@
 package org.quickstart.reactivex.example;
 
-import java.util.ArrayList;
+/*import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -19,9 +19,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-/*
+*//*
  * RxBinding这个库是基于RxJava的对于Android原生组件的绑定，是RxJava风格的， 相当于代替了OnClick,Listener这些东西，
- */
+ *//*
 
 public class RxBindingActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -122,4 +122,4 @@ public class RxBindingActivity extends AppCompatActivity implements View.OnClick
         break;
     }
   }
-}
+}*/

@@ -1,6 +1,6 @@
 package org.quickstart.reactivex.example;
 
-import android.graphics.drawable.Drawable;
+/*import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -89,4 +89,4 @@ public class RxSchuderActivity extends AppCompatActivity implements View.OnClick
       }
     });
   }
-}
+}*/

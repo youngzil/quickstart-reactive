@@ -1,4 +1,4 @@
-package org.quickstart.reactivex.rxnetty.examples;
+package org.quickstart.reactivex;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
