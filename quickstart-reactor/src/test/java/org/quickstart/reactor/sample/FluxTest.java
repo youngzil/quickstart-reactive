@@ -1,8 +1,12 @@
 package org.quickstart.reactor.sample;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Test;
 import org.reactivestreams.Subscriber;
@@ -10,6 +14,7 @@ import org.reactivestreams.Subscription;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 /**
  * @author youngzil@163.com
@@ -23,11 +28,116 @@ public class FluxTest {
   @Test
   public void testFlux() {
 
-    /*
-     * Flux.fromIterable(getSomeLongList()) .mergeWith(Flux.interval(100)) .doOnNext(serviceA::someObserver) .map(d -> d * 2) .take(3) .onErrorResume(errorHandler::fallback)
-     * .doAfterTerminate(serviceM::incrementTerminate) .subscribe(System.out::println);
-     */
+    /*Flux.fromIterable(getSomeLongList()).mergeWith(Flux.interval(100)).doOnNext(serviceA::someObserver).map(d -> d * 2).take(3)
+        .onErrorResume(errorHandler::fallback).doAfterTerminate(serviceM::incrementTerminate).subscribe(System.out::println);*/
 
+  }
+
+  @Test
+  public void testMonoCreate() {
+
+    Mono<Object> mono = Mono.create(sink -> {//
+      List<Integer> list = new ArrayList<>();
+      for (int i = 0; i < 5; i++) {
+        list.add(i);
+      }
+      sink.success(list);//
+    })//
+        .log();
+
+    StepVerifier.create(mono)//
+        .expectSubscription()//
+        .expectNext(Arrays.asList(0, 1, 2, 3, 4))//
+        .verifyComplete();
+
+  }
+
+  @Test
+  public void testFluxCreate() {
+
+    Flux<Object> flux = Flux.create(sink -> {//
+      for (int i = 0; i < 5; i++) {
+        sink.next(i * i);
+      }
+      sink.error(new RuntimeException("fake a mistake"));
+      sink.complete();
+    })//
+        .log();
+
+    StepVerifier.create(flux)//
+        .expectSubscription()//
+        .expectNext(0, 1, 4, 9, 16)//
+        .expectError(RuntimeException.class)//
+        .verify();
+
+  }
+
+  @Test
+  public void testFluxGenerate() {
+
+    Flux<Object> flux = Flux.generate(() -> 0, (i, sink) -> {
+      sink.next(i * i);
+      if (i == 5)
+        sink.complete();
+      return ++i;
+    }, state -> System.out.println("the final state is:" + state)).log();
+
+    flux.subscribe();
+
+  }
+
+  @Test
+  public void testFluxGenerate2() {
+    final AtomicInteger count = new AtomicInteger(1); // 1
+    Flux.generate(sink -> {//
+      sink.next(count.get() + " : " + new Date()); // 2
+      try {
+        TimeUnit.SECONDS.sleep(1);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      if (count.getAndIncrement() >= 5) {
+        sink.complete(); // 3
+      }
+    }).subscribe(System.out::println); // 4
+  }
+
+  @Test
+  public void testFluxGenerate3() {
+    Flux.generate(//
+        () -> 1, // 1
+        (count, sink) -> { // 2
+          sink.next(count + " : " + new Date());
+          try {
+            TimeUnit.SECONDS.sleep(1);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          if (count >= 5) {
+            sink.complete();
+          }
+          return count + 1; // 3
+        }).subscribe(System.out::println);
+  }
+
+  @Test
+  public void testFluxGenerate4() {
+
+    Flux.generate(//
+        () -> 1, //2
+        (count, sink) -> { //2
+          sink.next(count + " : " + new Date());
+          try {
+            TimeUnit.SECONDS.sleep(1);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          if (count >= 5) {
+            sink.complete();
+          }
+          return count + 1;
+        }, System.out::println) // 3
+        .subscribe(System.out::println);
   }
 
   @Test
