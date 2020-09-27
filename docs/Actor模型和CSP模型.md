@@ -1,6 +1,7 @@
+Actor模型和CSP模型
+
+
 对比 Actor 和 CSP
-
-
 
 Akka（Scala）实现了Actor模型
 Go语言的CSP模型（Golang CSP并发模型）

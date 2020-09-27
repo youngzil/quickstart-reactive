@@ -24,6 +24,15 @@ public class MonoTest {
      * .doOnSuccess(r -> serviceM.incrementSuccess()) .subscribe(System.out::println);
      */
 
+    Mono.just("2")//
+        .doOnSuccess(obj->{
+          System.out.println("Success");
+        })//
+        .doOnError(e->{
+          System.out.println("Error " + e.getMessage());
+        })
+        .subscribe(System.out::println);
+
   }
 
   @Test

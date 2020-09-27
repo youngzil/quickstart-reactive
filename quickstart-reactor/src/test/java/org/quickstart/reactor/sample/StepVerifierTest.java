@@ -19,7 +19,7 @@ import reactor.test.publisher.TestPublisher;
  * @version v1.0
  * @date 2020/8/12 17:38
  */
-public class ReactorTest {
+public class StepVerifierTest {
 
   // 参考：https://github.com/get-set/get-reactive/blob/master/snacks/src/test/java/com/getset/Test_2_6.java
 

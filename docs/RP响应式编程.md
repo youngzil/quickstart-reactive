@@ -1,25 +1,68 @@
-1、Reactive Programming(RP),响应式编程
-2、响应式编程框架:RxJava、Reactor框架
-3、响应式宣言（反应式宣言）
-4、性能之争：响应式编程真的有效吗？
-5、响应式编程介绍
-6、RP、FP、FRP区别，反应式编程、函数式编程、函数反应式编程
-7、
-8、
-9、
-
-
-学习网站
-https://www.infoq.cn/article/rxjava-by-example/
-https://www.infoq.com/articles/Refactoring-Reactive-JDBC/
+- [响应式编程介绍](#响应式编程介绍)：Reactive Programming(RP)
+    - [什么是反应式编程](#什么是反应式编程)
+    - [为什么我们需要Java中的“反应性”](#为什么我们需要Java中的“反应性”)
+    - [如何使用Java进行反应](#如何使用Java进行反应)
+    - [在现实生活中使用RP有什么好处](#在现实生活中使用RP有什么好处)
+    - [反应式系统和反应式编程](#反应式系统和反应式编程)
+- [响应式编程学习](#响应式编程学习)
+    - [性能之争：响应式编程真的有效吗？](#性能之争-响应式编程真的有效吗)
+    - [响应式编程概念学习](#响应式编程概念学习)
+    - [命令式编程和声明式编程](#命令式编程和声明式编程)
+    - [回调地狱](#回调地狱.md)
+    - [Actor模型](#Actor模型.md)
+    - [Actor模型和CSP模型](#Actor模型和CSP模型.md)
+    - [构建反应式微服务架构](#building_reactive_microservices_in_java.pdf)
+- [响应式编程框架](#响应式编程框架)
+    - [响应式编程规范](#响应式编程规范)
+    - [响应式宣言](#响应式宣言)
+    - [RxJava](#RxJava)：（Netflix开发，Java平台） 
+        - [RxJava介绍](#RxJava介绍)
+        - [RXJava1学习](#RXJava1学习)
+        - [RxJava2学习](#RxJava2学习)
+        - [RXJava3学习](#RXJava3学习)
+    - [Akka](#Akka)：（Lightbend（以前称为Typesafe），Scala语言）
+        - [Akka介绍](#Akka介绍)
+    - [Reactor框架](#Reactor框架)：（Pivatol开发，WebFlux 则是以 Reactor 为基础实现了 Web 领域的反应式编程框架）
+        - [Reactor介绍](#Reactor介绍)
+    - [Play2框架](Play2框架.md)
 
 ---------------------------------------------------------------------------------------------------------------------
+
+## 响应式编程介绍
+
 Reactive Programming(RP),响应式编程
 
 Observer Design Pattern 观察者模式
 
+命令式编程（指令式编程）、声明式编程、响应式编程  
+命令式编程（Imperative）：详细的命令机器怎么（How）去处理一件事情以达到你想要的结果（What）；  
+声明式编程（Declarative）：只告诉你想要的结果（What），机器自己摸索过程（How）。  
 
-1、什么是反应式编程？
+
+### 响应式编程有2个典型的例子：  
+1、Excel，当单元格变化了，相互之间的单元格也会立即变化。  
+2、Autolayout，当父View变化了，根据相互之间的关系Constraint，子View的frame也会随之变化。  
+
+
+### 响应式的核心特点之一：  
+1、变化传递（propagation of change）  
+2、基于数据流（data stream），这些数据/事件在响应式编程里会以数据流的形式发出。  
+3、声明式（declarative）”的编程范式，命令式是面向过程的，声明式是面向结构的。声明式比较适合基于流的处理方式  
+
+总结起来，响应式编程（reactive programming）是一种基于数据流（data stream）和变化传递（propagation of change）的声明式（declarative）的编程范式。  
+
+
+## 响应式编程好处
+根据个人经验来看，响应式编程至少有如下好处：
+1、在业务层面实现代码逻辑分离，方便后期维护和拓展：不会存在共享状态
+2、极大提高程序响应速度，充分发掘CPU的能力：网络IO、磁盘IO的时候，线程可以去做其他的事情，不会阻塞
+3、帮助开发者提高代码的抽象能力和充分理解业务逻辑
+4、Rx丰富的操作符会帮助我们极大的简化代码逻辑
+
+
+
+
+### 什么是反应式编程
 响应式编程是一种编程范例，用于处理异步数据流（事件的顺序）和特定的更改传播，这意味着它以一定顺序对执行环境（上下文）进行了修改。 
 反应式编程 (reactive programming) 是一种基于数据流 (data stream) 和 变化传递 (propagation of change) 的 声明式 (declarative) 的编程范式。  
 
@@ -34,17 +77,21 @@ Observer Design Pattern 观察者模式
 
 
 
-2、为什么我们需要Java中的“反应性”？
+### 为什么我们需要Java中的“反应性”
 当涉及到大量的数据或者多userness，我们经常需要异步处理，以使我们的快速反应系统。在Java（旧的面向对象编程的代表）中，异步性会变得很麻烦，并使代码难以理解和维护。因此，响应式编程对于这种“纯”面向对象的环境特别有益，因为它简化了异步流的处理。 
 
-3、如何使用Java进行反应？
+
+
+### 如何使用Java进行反应
 在其最新版本（从Java 8开始）中，Java本身已经进行了一些尝试来引入内置的反应性，但是迄今为止，这些尝试在开发人员中并不十分流行。但是，对于Java中的响应式编程，有一些实时且定期更新的第三方实现，这些实现有助于节省时间，因此受到Java开发人员的特别爱戴和珍惜。
 
 RxJava是第一个特定于Java平台的Reactive Extension API。它与Java 6一起使用，并提供了为Java和Android Java编写基于事件的异步程序的机会，这非常方便。
 
 Spring Reactor是Spring开发人员的另一个Java框架。它与RxJava非常相似，但是具有更简单的抽象。由于可以利用Java 8的优势，该框架已成功赢得欢迎。
 
-4、在现实生活中，使用RP有什么好处？
+
+
+### 在现实生活中使用RP有什么好处
 性能提高 –由于可以快速，稳定地处理大量数据。
 改进的UX –由于可以保持应用程序对用户的响应速度更快。
 简化的修改和更新 -由于更具可读性和更容易预测代码。
@@ -68,7 +115,7 @@ ReactiveX或Rx是用于反应式编程的最流行的API。它基于可观察模
 3、never block：因为您不拥有调用您的线程，所以必须确保永远不要阻止它。
 
 
-
+### 反应式系统和反应式编程
 Reactive Programming != Reactive System
 反应式编程 != 反应式系统
 
@@ -89,69 +136,159 @@ Stream 就是一个按时间排序的 Events 序列,它可以放射三种不同�
 
 
 参考
-https://www.scnsoft.com/blog/java-reactive-programming
-https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
-https://egghead.io/courses/introduction-to-reactive-programming
-https://dzone.com/articles/5-things-to-know-about-reactive-programming
-https://medium.com/@kevalpatel2106/what-is-reactive-programming-da37c1611382
-https://www.freecodecamp.org/news/an-introduction-to-functional-reactive-programming-in-redux-b0c14d097836/
-https://spring.io/blog/2016/06/07/notes-on-reactive-programming-part-i-the-reactive-landscape
-https://wiki.jikexueyuan.com/project/android-weekly/issue-145/introduction-to-RP.html
+https://www.scnsoft.com/blog/java-reactive-programming  
+https://gist.github.com/staltz/868e7e9bc2a7b8c1f754  
+https://egghead.io/courses/introduction-to-reactive-programming  
+https://dzone.com/articles/5-things-to-know-about-reactive-programming  
+https://medium.com/@kevalpatel2106/what-is-reactive-programming-da37c1611382  
+https://www.freecodecamp.org/news/an-introduction-to-functional-reactive-programming-in-redux-b0c14d097836/  
+https://spring.io/blog/2016/06/07/notes-on-reactive-programming-part-i-the-reactive-landscape  
+https://wiki.jikexueyuan.com/project/android-weekly/issue-145/introduction-to-RP.html  
 
 
 ---------------------------------------------------------------------------------------------------------------------
-响应式编程框架:RxJava、Reactor框架
+
+## 响应式编程框架
+
+
+
+## 响应式编程规范
+
+Reactive Streams 项目（规范）：反应式编程相关的规范以及接口。 
+
+响应式流规范（Reactive Stream Specification）：接口规范，实现的框架有：RxJava、reactor
+因此基于响应式流的实现属于第三代，它的实现包括 RxJava 2.x，Project Reactor 和 Akka-Streams等。
+https://github.com/reactive-streams/reactive-streams-jvm
+http://www.reactive-streams.org/
+
+响应式流规范定义了四个接口，如下：
+1.Publisher是能够发出元素的发布者。
+2.Subscriber是接收元素并做出响应的订阅者。
+3.Subscription是Publisher和Subscriber的“中间人”。
+4.Processor集Publisher和Subscriber于一身。
+
+这四个接口在JEP 266跟随Java 9版本被引入了Java SDK。
+
+
+操作符熔合
+https://github.com/reactor/reactive-streams-commons
+https://blog.csdn.net/get_set/article/details/79799922
+
+
+参考  
+https://cloud.tencent.com/developer/news/327778  
+
+
+
+### 响应式宣言
+
+响应式宣言（反应式宣言）
+
+https://www.reactivemanifesto.org/ribbons  
+https://www.reactivemanifesto.org/  
+https://www.reactivemanifesto.org/zh-CN  
+
+参考  
+https://www.infoq.cn/article/2016/01/reactive-basics  
+https://blog.csdn.net/get_set/article/details/79506602  
+
+
+不过也应该看到，也正是由于响应式宣言中对现代系统的Responsive、Resilient、Elastic和Message Driven的要求，使得对响应式编程技术的呼声越来越高，显然响应式编程技术是构建响应式系统的合适工具之一。尤其是随着面向响应式宣言的响应式流规范（Reactive Streams Specification）这一顶层设计的提出，类似Reactor、RxJava、Vert.x、Spring WebFlux等的响应式编程技术在响应式系统中必将发挥越来越大的作用。
+
+
+在这个宣言里面，对于响应式的系统特征定义了四个特性：
+    及时响应(Responsive)：系统能及时的响应请求。
+    有韧性(Resilient)：系统在出现异常时仍然可以响应，即支持容错。
+    有弹性(Elastic)：在不同的负载下，系统可弹性伸缩来保证运行。
+    消息驱动(Message Driven)：不同组件之间使用异步消息传递来进行交互，并确保松耦合及相互隔离。
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+## RxJava
+
+### RxJava介绍
+RxJava（Netflix开发，Java平台）    
 
 RxJava是第一个特定于Java平台的Reactive Extension API。它与Java 6一起使用，并提供了为Java和Android Java编写基于事件的异步程序的机会，这非常方便。
 
-Spring Reactor是Spring开发人员的另一个Java框架。它与RxJava非常相似，但是具有更简单的抽象。由于可以利用Java 8的优势，该框架已成功赢得欢迎。
 
-https://github.com/ReactiveX
+https://github.com/ReactiveX  
+
 ReactiveX或Rx是用于反应式编程的最流行的API。它基于可观察模式，迭代器模式和函数式编程的思想。
+
 RX为您提供了超能力。您拥有组合，合并，过滤，转换和创建数据流的功能库。
+
 Rx具有用于不同语言的库，RxJava、RxNetty、RxJS、RxPY、RxCpp、RxGo、RxKotlin、RxScala、RxGroovy、RxAndroid、RxPHP、RxRuby
 
 
-RxJava弹珠交互图
-https://rxmarbles.com/
-https://github.com/staltz/rxmarbles
+RxJava弹珠交互图  
+https://rxmarbles.com/  
+https://github.com/staltz/rxmarbles  
 
 
 
+### [RXJava1学习](RXJava/RXJava1.x学习.md)  
 
-reactor框架
-http://projectreactor.io
-http://www.reactive-streams.org/
-https://github.com/reactor/reactor-core
+### [RxJava2学习](RXJava/RxJava学习.md)  
+
+### [RXJava3学习](RXJava/RXJava3学习.md)  
+        
 
 
+参考  
+https://www.infoq.cn/article/rxjava-by-example/  
+https://www.infoq.com/articles/Refactoring-Reactive-JDBC/  
 
-Akka框架
+
+---------------------------------------------------------------------------------------------------------------------
+## Akka
+
+
+### Akka介绍
+
+Akka（Lightbend（以前称为Typesafe），Scala语言）
+
+Akka（Akka用Scala语言编写，同时提供了Scala和Java的开发接口。）  
+
+Lightbend（以前称为Typesafe）是由Scala编程语言的创建者Martin Odersky，Akka中间件的创建者JonasBonér和2011年的Paul Phillips共同创立的公司。
 
 
 
 ---------------------------------------------------------------------------------------------------------------------
-
-响应式宣言
-https://www.reactivemanifesto.org/ribbons
-https://www.reactivemanifesto.org/
-https://www.reactivemanifesto.org/zh-CN
+## Reactor框架
 
 
-参考
-https://www.infoq.cn/article/2016/01/reactive-basics
-https://blog.csdn.net/get_set/article/details/79506602
+### Reactor介绍
+
+Reactor（Pivatol开发，WebFlux 则是以 Reactor 为基础实现了 Web 领域的反应式编程框架）  
+
+Spring Reactor是Spring开发人员的另一个Java框架。它与RxJava非常相似，但是具有更简单的抽象。由于可以利用Java 8的优势，该框架已成功赢得欢迎。
+
+reactor框架  
+http://projectreactor.io  
+http://www.reactive-streams.org/  
+https://github.com/reactor/reactor-core  
+
+
+学习Reactor Core 3.x提供的lite Rx API 。  
+https://github.com/reactor/lite-rx-api-hands-on
 
 
 
-
-
-
+参考  
+https://blog.csdn.net/get_set/category_7484996.html  
+https://blog.csdn.net/get_set/category_9272724.html  
 
 
 
 
 ---------------------------------------------------------------------------------------------------------------------
+## 响应式编程学习
+
+
+### 性能之争-响应式编程真的有效吗
 
 性能之争：响应式编程真的有效吗？
 https://www.infoq.cn/article/xYCWYK9*TfmpFNO6RkWt
@@ -197,43 +334,11 @@ https://cr.openjdk.java.net/~rpressler/loom/Loom-Proposal.html
 
 
 ---------------------------------------------------------------------------------------------------------------------
-响应式编程介绍
-
-
-命令式编程（指令式编程）、声明式编程、响应式编程
-命令式编程（Imperative）：详细的命令机器怎么（How）去处理一件事情以达到你想要的结果（What）；
-声明式编程（Declarative）：只告诉你想要的结果（What），机器自己摸索过程（How）。
-
-
-响应式编程有2个典型的例子：
-1、Excel，当单元格变化了，相互之间的单元格也会立即变化。
-2、Autolayout，当父View变化了，根据相互之间的关系Constraint，子View的frame也会随之变化。
-
-
-
-
-根据个人经验来看，响应式编程至少有如下好处：
-1、在业务层面实现代码逻辑分离，方便后期维护和拓展：不会存在共享状态
-2、极大提高程序响应速度，充分发掘CPU的能力：网络IO、磁盘IO的时候，线程可以去做其他的事情，不会阻塞
-3、帮助开发者提高代码的抽象能力和充分理解业务逻辑
-4、Rx丰富的操作符会帮助我们极大的简化代码逻辑
-
-
-
-
-响应式的核心特点之一：
-1、变化传递（propagation of change）
-2、基于数据流（data stream），这些数据/事件在响应式编程里会以数据流的形式发出。
-3、声明式（declarative）”的编程范式，命令式是面向过程的，声明式是面向结构的。声明式比较适合基于流的处理方式
-
-总结起来，响应式编程（reactive programming）是一种基于数据流（data stream）和变化传递（propagation of change）的声明式（declarative）的编程范式。  
-
-
+### 响应式编程概念学习
 
 响应式编程是一种通过异步和数据流来构建事务关系的编程模型。这里每个词都很重要，“事务的关系”是响应式编程的核心理念，“数据流”和“异步”是实现这个核心理念的关键。
 异步和数据流都是为了正确的构建事务的关系而存在的。只不过，异步是为了区分出无关的事务，而数据流（事件流）是为了联系起有关的事务。
 Reactive编程 是面向数据流的、异步化的编程范式
-
 
 
 为啥不用Java Stream来进行数据流的操作？ 原因在于，若将其用于响应式编程中，是有局限性的。比如如下两个需要面对的问题：
@@ -249,33 +354,6 @@ Reactive编程 是面向数据流的、异步化的编程范式
 
 类似的，Spring WebFlux是一种响应式编程框架，用于开发响应式应用，而Spring Cloud不仅是更是一套适应于当今云原生环境下微服务架构基础，更加接近响应式宣言的目标和响应式系统的设计原则。
 
-不过也应该看到，也正是由于响应式宣言中对现代系统的Responsive、Resilient、Elastic和Message Driven的要求，使得对响应式编程技术的呼声越来越高，显然响应式编程技术是构建响应式系统的合适工具之一。尤其是随着面向响应式宣言的响应式流规范（Reactive Streams Specification）这一顶层设计的提出，类似Reactor、RxJava、Vert.x、Spring WebFlux等的响应式编程技术在响应式系统中必将发挥越来越大的作用。
-
-
-在这个宣言里面，对于响应式的系统特征定义了四个特性：
-    及时响应(Responsive)：系统能及时的响应请求。
-    有韧性(Resilient)：系统在出现异常时仍然可以响应，即支持容错。
-    有弹性(Elastic)：在不同的负载下，系统可弹性伸缩来保证运行。
-    消息驱动(Message Driven)：不同组件之间使用异步消息传递来进行交互，并确保松耦合及相互隔离。
-
-
-响应式流规范（Reactive Stream Specification）：接口规范，实现的框架有：RxJava、reactor
-因此基于响应式流的实现属于第三代，它的实现包括 RxJava 2.x，Project Reactor 和 Akka-Streams等。
-https://github.com/reactive-streams/reactive-streams-jvm
-http://www.reactive-streams.org/
-
-响应式流规范定义了四个接口，如下：
-1.Publisher是能够发出元素的发布者。
-2.Subscriber是接收元素并做出响应的订阅者。
-3.Subscription是Publisher和Subscriber的“中间人”。
-4.Processor集Publisher和Subscriber于一身。
-
-这四个接口在JEP 266跟随Java 9版本被引入了Java SDK。
-
-
-
-
-
 
 响应式编程，即 Reactive Programming。它是一种基于事件模式的模型。在上面的异步编程模式中，我们描述了两种获得上一个任务执行结果的方式，
 一个就是主动轮询，我们把它称为 Proactive 方式；
@@ -286,32 +364,6 @@ http://www.reactive-streams.org/
 1.push“推模式“，就是被监听者将消息推送出去，进而触发监听者的相应事件。如上面的事例代码就是采用这种方式，响应式编程一般采用这种模式。
 2.pull"拉模式”，就是监听者主动从被监听者处获取数据。
 
-
-
-
-
-
-
-
-
-
-
-
-
-操作符熔合
-https://github.com/reactor/reactive-streams-commons
-https://blog.csdn.net/get_set/article/details/79799922
-
-
-学习Reactor Core 3.x提供的lite Rx API 。
-https://github.com/reactor/lite-rx-api-hands-on
-
-
-
-参考
-https://blog.csdn.net/get_set/category_7484996.html
-https://blog.csdn.net/get_set/category_9272724.html
-https://cloud.tencent.com/developer/news/327778
 
 
 
@@ -332,7 +384,10 @@ https://www.jianshu.com/p/4894c708e467
 
 
 ---------------------------------------------------------------------------------------------------------------------
+## 命令式编程和声明式编程
+
 RP、FP、FRP区别，反应式编程、函数式编程、函数反应式编程
+
 
 
 面向对象编程 Object Oriented Programming
@@ -399,6 +454,10 @@ RP、FP、FRP区别，反应式编程、函数式编程、函数反应式编程
 参考
 https://halfrost.com/functional_reactive_programming_concept/
 https://insights.thoughtworks.cn/lets-talk-about-reactive/
+
+
+---------------------------------------------------------------------------------------------------------------------
+
 
 
 
