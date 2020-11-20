@@ -161,7 +161,7 @@ public class HttpClientExample2 {
         })
 
         .wiretap(true)//
-        .headers(h -> h.set(httpHeaders).set(HttpHeaderNames.USER_AGENT, "AiGw(Asiainfo PRD TA)/1.0"))//
+        .headers(h -> h.set(httpHeaders).set(HttpHeaderNames.USER_AGENT, "AiGw(XX PRD TA)/1.0"))//
         .request(httpMethod)//
         .uri(finalEndPoint.getPath())//
         .send(ByteBufFlux.fromString(Mono.just(httpBody), configuration.getCharset(), ByteBufAllocator.DEFAULT))//
